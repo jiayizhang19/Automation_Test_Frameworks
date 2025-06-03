@@ -1,20 +1,17 @@
-# -*- encoding=utf8 -*-
-"""
-执行命令
-"""
+
 import os
 import sys
 import argparse
 import configparser
 from pytest_run import *
 import json
-# 动态添加当前目录到系统路径
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# 根据调度任务选择区分调度路径
+
 try:
     # jenkins任务调度使用相对路径导入
     from .before_run import Main
@@ -35,23 +32,11 @@ conf.read(os.path.join(CONFIGDIR, 'conf.ini'), encoding='utf-8')
 class Run:
     def __init__(self, case_path=None, include_cases=None, exclude_cases=None, node_name='', exclude_cases_dirs=None,
                  case_level=None, single_send_flag=None, dingding_token=None, bulid_user_name=None, bulid_cron=None, test_plan_name=None):
-        # 解析jenkins,case_path传参
-        if case_path:
-            if isinstance(case_path[0], str) and (',' in case_path[0] or '，' in case_path[0]):
-                # 统一处理为英文逗号，并分割字符串
-                case_path = [path.strip() for path in case_path[0].replace('，', ',').split(',')]
-            # 拼接路径
-            full_case_paths = [os.path.join(current_dir, path) for path in case_path if path]
-            for p in full_case_paths:
-                print(p, os.path.exists(p))
-            self.case = Beforerun(full_case_paths, include_cases, exclude_cases, exclude_cases_dirs,
-                             case_level, bulid_user_name, bulid_cron, test_plan_name, node_name, dingding_token, single_send_flag)
-        else:
-            self.case = Beforerun([], include_cases, exclude_cases, exclude_cases_dirs,
-                             case_level, bulid_user_name, bulid_cron, test_plan_name, node_name, dingding_token, single_send_flag)
+        pass
+
     def run(self):
-        # 执行用例
-        self.case.run()
+        pass
+
 if __name__ == '__main__':
     # 创建解析器
     parser = argparse.ArgumentParser()

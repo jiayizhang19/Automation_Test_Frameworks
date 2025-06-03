@@ -78,7 +78,7 @@ def setup_update_overall_reports():
         single_send_flag=message_info.get('single_send_flag'),
     )
     
-    # 将当前执行任务和执行用例插入数据库，执行完成后更新状态
+
     report_manager.initialize_test_report_and_cases()
 
     yield {
@@ -89,13 +89,13 @@ def setup_update_overall_reports():
         "message_manager": message_manager
     }
 
-    # 更新整体任务结果至数据库
+
     report_manager.process_report()
 
-    # 获取最终报告结果
+
     result = report_manager.get_final_report()
 
-    # 判断当前线程报告是否写入数据库，若为false则没有报告，所以就无需发送整体报告消息
+
     if write_db_flag and all(
         hasattr(message_manager,attr) for attr in ['testreportid','project_name', 'test_plan_name']
     ):
@@ -115,7 +115,7 @@ def setup_update_single_report(request, setup_update_overall_reports, cleanup_en
         project_root=os.path.dirname(test_file),
     )
     yield
-    # 生成单条报告
+
     h = LogToHtml(
         script_root=os.path.dirname(test_file),
         log_root=case_info['report_path'],
@@ -128,17 +128,17 @@ def setup_update_single_report(request, setup_update_overall_reports, cleanup_en
     report_manager = setup_update_overall_reports["report_manager"]
     message_manager = setup_update_overall_reports["message_manager"]
 
-    # 获取单条报告 
+
     one_report = report_manager.get_one_report(
         case_info["case_path"], 
         case_info["file_name"]
     )
-    # 上传单条报告至服务器
+
     report_manager.upload_report(one_report)
-    # 更新单条报告至数据库
+
     report_manager.update_report_data(case_info, one_report)
 
-    # 判断当前线程生成报告是否写入数据库，若为false则没有报告，所以就无需发送单条报告消息
+
     # Step 1: pass case_path manually to manage_cases to ensure single message delivery, otherwise it will be a failure
     manage_cases.case_path = case_info["case_path"] 
     # Step 2: send single message of different test cases 
