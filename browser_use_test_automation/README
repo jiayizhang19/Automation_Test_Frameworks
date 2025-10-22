@@ -1,0 +1,11 @@
+This repo contains several automation testing frameworks that could be useful for software testing.
+
+Airtest_Pytest_Framework is designed for mobile application testing.
+
+browser_use_test_automation is designed for intelligent framewrok powered by an AI agent called browser_use_test_automation.
+
+Requests_Pytest_Framework is designed for Web API testing using a Pytest framework.
+
+Selenium_Pytest_Framework is designed for Web UI testing using a Pytest framework.
+
+Selenium_TestNG_Framework is designed for Web UI testing but using a TestNG framework.
